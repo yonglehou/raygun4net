@@ -18,6 +18,7 @@
         <file src="build\Mindscape.Raygun4Net.pdb" target="lib\net35\Mindscape.Raygun4Net.pdb" />
 		<file src="web.config.transform" target="content\net35\web.config.transform" />
 		<file src="app.config.transform" target="content\net35\app.config.transform" />
+		<file src="uninstall.ps1" target="tools\net35\uninstall.ps1" />
 		<!-- WinRT -->
         <file src="build\Mindscape.Raygun4Net.WinRT\Mindscape.Raygun4Net.WinRT.dll" target="lib\windows8\Mindscape.Raygun4Net.WinRT.dll" />
         <file src="build\Mindscape.Raygun4Net.WinRT\Mindscape.Raygun4Net.WinRT.pdb" target="lib\windows8\Mindscape.Raygun4Net.WinRT.pdb" />
