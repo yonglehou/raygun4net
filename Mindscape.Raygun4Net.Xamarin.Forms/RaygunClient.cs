@@ -11,11 +11,11 @@ using System.Windows;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Microsoft.Phone.Info;
-using System.IO.IsolatedStorage;
+//using Microsoft.Phone.Info;
+//using System.IO.IsolatedStorage;
 using System.Text;
-using Microsoft.Phone.Net.NetworkInformation;
-using Mindscape.Raygun4Net.WindowsPhone;
+//using Microsoft.Phone.Net.NetworkInformation;
+//using Mindscape.Raygun4Net.WindowsPhone;
 using System.Reflection;
 
 namespace Mindscape.Raygun4Net
@@ -40,8 +40,8 @@ namespace Mindscape.Raygun4Net
       
       _wrapperExceptions.Add(typeof(TargetInvocationException));
 
-      SetCallingAssembly(Assembly.GetCallingAssembly());
-      Deployment.Current.Dispatcher.BeginInvoke(SendStoredMessages);
+      //SetCallingAssembly(Assembly.GetCallingAssembly());
+      //Deployment.Current.Dispatcher.BeginInvoke(SendStoredMessages);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ namespace Mindscape.Raygun4Net
     public RaygunClient()
       : this(RaygunSettings.Settings.ApiKey)
     {
-      SetCallingAssembly(Assembly.GetCallingAssembly());
+      //SetCallingAssembly(Assembly.GetCallingAssembly());
     }
 
     private bool ValidateApiKey()
@@ -96,12 +96,12 @@ namespace Mindscape.Raygun4Net
       }
     }
 
-    /*private static RaygunClient _client;
+    //private static RaygunClient _client;
 
     /// <summary>
     /// Gets the <see cref="RaygunClient"/> created by the Attach method.
     /// </summary>
-    public static RaygunClient Current
+    /*public static RaygunClient Current
     {
       get { return _client; }
     }*/
@@ -112,13 +112,13 @@ namespace Mindscape.Raygun4Net
     /// <param name="apiKey">Your app api key.</param>
     public static void Attach(string apiKey)
     {
-      Detach();
-      Current = new RaygunClient(apiKey);
-      //Current.SetCallingAssembly(Assembly.GetCallingAssembly());
+      /*Detach();
+      _client = new RaygunClient(apiKey);
+      _client.SetCallingAssembly(Assembly.GetCallingAssembly());
       if (Application.Current != null)
       {
         Application.Current.UnhandledException += Current_UnhandledException;
-      }
+      }*/
     }
 
     /// <summary>
@@ -126,22 +126,21 @@ namespace Mindscape.Raygun4Net
     /// </summary>
     public static void Detach()
     {
-      if (Application.Current != null)
+      /*if (Application.Current != null)
       {
         Application.Current.UnhandledException -= Current_UnhandledException;
-      }
+      }*/
     }
 
-    private static void Current_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
+    /*private static void Current_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
     {
       if (e.ExceptionObject is Exception)
       {
-        // TODO: don't leave this cast here:
-        ((RaygunClient)Current).Send(e.ExceptionObject);
+        _client.Send(e.ExceptionObject);
       }
-    }
+    }*/
 
-    private bool IsCalledFromApplicationUnhandledExceptionHandler()
+    /*private bool IsCalledFromApplicationUnhandledExceptionHandler()
     {
       StackTrace trace = new StackTrace();
       if (trace.FrameCount > 3)
@@ -154,16 +153,16 @@ namespace Mindscape.Raygun4Net
         }
       }
       return false;
-    }
+    }*/
 
-    private void SetCallingAssembly(Assembly assembly)
+    /*private void SetCallingAssembly(Assembly assembly)
     {
       if (!assembly.Equals(Assembly.GetExecutingAssembly()))
       {
         _callingAssembly = assembly;
       }
-    }
-
+    }*/
+    /*
     /// <summary>
     /// Sends a message to the Raygun.io endpoint based on the given <see cref="ApplicationUnhandledExceptionEventArgs"/>.
     /// </summary>
@@ -208,14 +207,14 @@ namespace Mindscape.Raygun4Net
         Send(BuildMessage(args.ExceptionObject, tags, userCustomData), false, !handled);
       }
     }
-
+    */
     /// <summary>
     /// Sends a message to the Raygun.io endpoint based on the given <see cref="Exception"/>.
     /// </summary>
     /// <param name="exception">The <see cref="Exception"/> to send in the message.</param>
     public override void Send(Exception exception)
     {
-      bool calledFromUnhandled = IsCalledFromApplicationUnhandledExceptionHandler();
+      bool calledFromUnhandled = false;// IsCalledFromApplicationUnhandledExceptionHandler();
       Send(exception, null, null, calledFromUnhandled);
     }
 
@@ -226,7 +225,7 @@ namespace Mindscape.Raygun4Net
     /// <param name="tags">A list of tags to send with the message.</param>
     public void Send(Exception exception, IList<string> tags)
     {
-      bool calledFromUnhandled = IsCalledFromApplicationUnhandledExceptionHandler();
+      bool calledFromUnhandled = false;// IsCalledFromApplicationUnhandledExceptionHandler();
       Send(exception, tags, null, calledFromUnhandled);
     }
 
@@ -237,7 +236,7 @@ namespace Mindscape.Raygun4Net
     /// <param name="userCustomData">Custom data to send with the message.</param>
     public void Send(Exception exception, IDictionary userCustomData)
     {
-      bool calledFromUnhandled = IsCalledFromApplicationUnhandledExceptionHandler();
+      bool calledFromUnhandled = false;// IsCalledFromApplicationUnhandledExceptionHandler();
       Send(exception, null, userCustomData, calledFromUnhandled);
     }
 
@@ -249,13 +248,13 @@ namespace Mindscape.Raygun4Net
     /// <param name="userCustomData">Custom data to send with the message.</param>
     public void Send(Exception exception, IList<string> tags, IDictionary userCustomData)
     {
-      bool calledFromUnhandled = IsCalledFromApplicationUnhandledExceptionHandler();
+      bool calledFromUnhandled = false;// IsCalledFromApplicationUnhandledExceptionHandler();
       Send(exception, tags, userCustomData, calledFromUnhandled);
     }
 
     private void Send(Exception exception, IList<string> tags, IDictionary userCustomData, bool calledFromUnhandled)
     {
-      if (!(exception is ExitException))
+      //if (!(exception is ExitException))
       {
         Send(BuildMessage(exception, tags, userCustomData), calledFromUnhandled, false);
       }
@@ -268,7 +267,7 @@ namespace Mindscape.Raygun4Net
     /// set to a valid DateTime and as much of the Details property as is available.</param>
     public void Send(RaygunMessage raygunMessage)
     {
-      bool calledFromUnhandled = IsCalledFromApplicationUnhandledExceptionHandler();
+      bool calledFromUnhandled = false;// IsCalledFromApplicationUnhandledExceptionHandler();
       Send(raygunMessage, calledFromUnhandled, false);
     }
 
@@ -282,11 +281,11 @@ namespace Mindscape.Raygun4Net
           try
           {
             string message = SimpleJson.SerializeObject(raygunMessage);
-            if (NetworkInterface.NetworkInterfaceType != NetworkInterfaceType.None)
+            /*if (NetworkInterface.NetworkInterfaceType != NetworkInterfaceType.None)
             {
               SendMessage(message, wait, exit);
             }
-            else
+            else*/
             {
               SaveMessage(message);
             }
@@ -301,7 +300,7 @@ namespace Mindscape.Raygun4Net
 
     private bool _saveOnFail = true;
 
-    private void SendStoredMessages()
+    /*private void SendStoredMessages()
     {
       if (NetworkInterface.NetworkInterfaceType != NetworkInterfaceType.None)
       {
@@ -336,7 +335,7 @@ namespace Mindscape.Raygun4Net
           _saveOnFail = true;
         }
       }
-    }
+    }*/
 
     private void SendMessage(string message, bool wait, bool exit)
     {
@@ -352,10 +351,10 @@ namespace Mindscape.Raygun4Net
       _running = true;
       httpWebRequest.BeginGetRequestStream(RequestReady, httpWebRequest);
 
-      while (_running)
+      /*while (_running)
       {
         Thread.Sleep(10);
-      }
+      }*/
 
       try
       {
@@ -367,16 +366,16 @@ namespace Mindscape.Raygun4Net
         Debug.WriteLine("Error Logging Exception to Raygun.io " + ex.Message);
       }
 
-      if (wait)
+      /*if (wait)
       {
         Thread.Sleep(3000);
-      }
+      }*/
       _running = false;
     }
 
     private void SaveMessage(string message)
     {
-      try
+      /*try
       {
         using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
         {
@@ -423,7 +422,7 @@ namespace Mindscape.Raygun4Net
       catch (Exception ex)
       {
         Debug.WriteLine(string.Format("Error saving message to isolated storage {0}", ex.Message));
-      }
+      }*/
     }
 
     private void RequestReady(IAsyncResult asyncResult)
@@ -445,7 +444,7 @@ namespace Mindscape.Raygun4Net
                 {
                   writer.Write(message);
                   writer.Flush();
-                  writer.Close();
+                  //writer.Close();
                 }
               }
             }
@@ -476,7 +475,7 @@ namespace Mindscape.Raygun4Net
       _running = false;
       if (_exit)
       {
-        throw new ExitException();
+        //throw new ExitException();
       }
     }
 
@@ -484,8 +483,8 @@ namespace Mindscape.Raygun4Net
     {
       exception = StripWrapperExceptions(exception);
 
-      object deviceName;
-      DeviceExtendedProperties.TryGetValue("DeviceName", out deviceName);
+      object deviceName = "";
+      //DeviceExtendedProperties.TryGetValue("DeviceName", out deviceName);
       
       string version = _callingAssembly != null ? new AssemblyName(_callingAssembly.FullName).Version.ToString() : "Not supplied";
       if (!String.IsNullOrWhiteSpace(ApplicationVersion))
@@ -493,7 +492,7 @@ namespace Mindscape.Raygun4Net
         version = ApplicationVersion;
       }
 
-      var message = RaygunMessageBuilder.New
+      /*var message = RaygunMessageBuilder.New
           .SetEnvironmentDetails()
           .SetMachineName(deviceName.ToString())
           .SetExceptionDetails(exception)
@@ -501,11 +500,11 @@ namespace Mindscape.Raygun4Net
           .SetVersion(version)
           .SetTags(tags)
           .SetUserCustomData(userCustomData)
-          //.SetUser(UserInfo ?? (!String.IsNullOrEmpty(User) ? new RaygunIdentifierMessage(User) : null))
-          .SetUser(new RaygunIdentifierMessage(User))
+          .SetUser(UserInfo ?? (!String.IsNullOrEmpty(User) ? new RaygunIdentifierMessage(User) : null))
           .Build();
 
-      return message;
+      return message;*/
+      return null;
     }
 
     private Exception StripWrapperExceptions(Exception exception)

@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Net;
-using Mindscape.Raygun4Net.Messages;
+//using Mindscape.Raygun4Net.Messages;
 
 namespace Mindscape.Raygun4Net
 {
-  public abstract class RaygunClientBase
+  public abstract class RaygunClientBase : IRaygunClient
   {
     protected internal const string SentKey = "AlreadySentByRaygun";
+
+    private static IRaygunClient _client;
+
+    public static IRaygunClient Current
+    {
+      get { return _client; }
+      protected set { _client = value; }
+    }
 
     /// <summary>
     /// Gets or sets the user identity string.
@@ -16,7 +24,7 @@ namespace Mindscape.Raygun4Net
     /// <summary>
     /// Gets or sets information about the user including the identity string.
     /// </summary>
-    public virtual RaygunIdentifierMessage UserInfo { get; set; }
+    //public virtual RaygunIdentifierMessage UserInfo { get; set; }
 
     /// <summary>
     /// Gets or sets a custom application version identifier for all error messages sent to the Raygun.io endpoint.
@@ -50,12 +58,12 @@ namespace Mindscape.Raygun4Net
     /// <summary>
     /// Raised just before a message is sent. This can be used to make final adjustments to the <see cref="RaygunMessage"/>, or to cancel the send.
     /// </summary>
-    public event EventHandler<RaygunSendingMessageEventArgs> SendingMessage;
+    //public event EventHandler<RaygunSendingMessageEventArgs> SendingMessage;
 
     private bool _handlingRecursiveErrorSending;
 
     // Returns true if the message can be sent, false if the sending is canceled.
-    protected bool OnSendingMessage(RaygunMessage raygunMessage)
+    /*protected bool OnSendingMessage(RaygunMessage raygunMessage)
     {
       bool result = true;
 
@@ -82,7 +90,7 @@ namespace Mindscape.Raygun4Net
       }
 
       return result;
-    }
+    }*/
 
     /// <summary>
     /// Transmits an exception to Raygun.io synchronously.
