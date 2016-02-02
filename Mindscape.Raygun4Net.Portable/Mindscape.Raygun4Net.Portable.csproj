@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyVersionInfo.cs">
@@ -45,11 +46,11 @@
     <Compile Include="..\Mindscape.Raygun4Net.WindowsStore\Messages\RaygunMessageDetails.cs">
       <Link>Messages\RaygunMessageDetails.cs</Link>
     </Compile>
-    <Compile Include="..\Mindscape.Raygun4Net\Builders\RaygunErrorMessageBuilder.cs">
-      <Link>Builders\RaygunErrorMessageBuilder.cs</Link>
-    </Compile>
     <Compile Include="..\Mindscape.Raygun4Net\Builders\RaygunErrorMessageBuilderBase.cs">
       <Link>Builders\RaygunErrorMessageBuilderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Mindscape.Raygun4Net\IRaygunMessageBuilder.cs">
+      <Link>IRaygunMessageBuilder.cs</Link>
     </Compile>
     <Compile Include="..\Mindscape.Raygun4Net\Messages\RaygunClientMessage.cs">
       <Link>Messages\RaygunClientMessage.cs</Link>
@@ -72,7 +73,15 @@
     <Compile Include="..\Mindscape.Raygun4Net\RaygunSendingMessageEventArgs.cs">
       <Link>RaygunSendingMessageEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\Mindscape.Raygun4Net\SimpleJson.cs">
+      <Link>SimpleJson.cs</Link>
+    </Compile>
+    <Compile Include="Builders\RaygunEnvironmentMessageBuilder.cs" />
+    <Compile Include="Builders\RaygunErrorMessageBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RaygunClient.cs" />
+    <Compile Include="RaygunMessageBuilder.cs" />
+    <Compile Include="RaygunSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
